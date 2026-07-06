@@ -77,20 +77,13 @@ def login_cookie_dict(session, cookie_dict):
 
 
 def get_data_link(session, cpt_id):
-    resp = session.get(f"{API}/competition/data?cpt_id={cpt_id}")
+    resp = session.get(f"{API}/competition?cpt_id={cpt_id}")
     data = resp.json()
     link = None
-    if isinstance(data.get("data"), dict):
-        link = data["data"].get("data_link")
-    if not link:
-        link = data.get("data_link")
-    if not link:
-        for v in data.values():
-            if isinstance(v, dict):
-                link = v.get("data_link")
-                if link:
-                    break
-    if not link or link == "null":
+    cpt = data.get("data") if isinstance(data.get("data"), dict) else data
+    if isinstance(cpt, dict):
+        link = cpt.get("data_link")
+    if not link or link in ("null", ""):
         print("[!] 데이터 링크 없음. 대회 참가 후 시도해주세요.")
         print(f"    API 응답: {data}")
         sys.exit(1)
