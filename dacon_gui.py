@@ -12,6 +12,17 @@ import threading
 import requests
 from pathlib import Path
 from urllib.parse import urlparse
+
+# Wayland 세션에서 DISPLAY가 없을 때 XWayland 디스플레이 자동 설정
+if not os.environ.get("DISPLAY"):
+    import glob
+    socks = glob.glob("/tmp/.X11-unix/X*")
+    if socks:
+        num = socks[0].replace("/tmp/.X11-unix/X", "")
+        os.environ["DISPLAY"] = f":{num}"
+    else:
+        os.environ["DISPLAY"] = ":0"
+
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 
