@@ -29,6 +29,26 @@ python3 dacon_gui.py
 
 ---
 
+## Remote 서버 자동 다운로드 (노트북에서 실행)
+
+SSH로 원격 서버에 접속해서 작업하는 경우, **로컬 노트북에서** 이 스크립트를 실행하면 Chrome 쿠키를 자동으로 가져와서 원격 서버에서 다운로드합니다.
+
+### 노트북에서 실행
+
+```bash
+# rtx-5070ti에서 스크립트 복사
+scp rtx-5070ti:~/dacon-downloader/dacon_auto.py ~/
+
+# 실행 (의존성 자동 설치됨)
+python3 ~/dacon_auto.py --cpt_id 236727
+```
+
+- Chrome에 dacon.io 로그인이 되어 있어야 합니다
+- `--remote` 기본값은 `rtx-5070ti`, 다른 서버면 `--remote 호스트명` 추가
+- `--output` 기본값은 `~/dacon/data` (원격 서버 경로)
+
+---
+
 ## CLI 버전
 
 ### 설치
