@@ -76,16 +76,30 @@ def login_cookie_dict(session, cookie_dict):
     print(f"[+] 로그인 확인: {name}")
 
 
+def _find_data_link(obj):
+    """dict/list를 재귀 탐색해 data_link 값을 반환"""
+    if isinstance(obj, dict):
+        if "data_link" in obj and obj["data_link"] not in (None, "", "null"):
+            return obj["data_link"]
+        for v in obj.values():
+            result = _find_data_link(v)
+            if result:
+                return result
+    elif isinstance(obj, list):
+        for item in obj:
+            result = _find_data_link(item)
+            if result:
+                return result
+    return None
+
+
 def get_data_link(session, cpt_id):
     resp = session.get(f"{API}/competition?cpt_id={cpt_id}")
     data = resp.json()
-    link = None
-    cpt = data.get("data") if isinstance(data.get("data"), dict) else data
-    if isinstance(cpt, dict):
-        link = cpt.get("data_link")
-    if not link or link in ("null", ""):
+    link = _find_data_link(data)
+    if not link:
         print("[!] 데이터 링크 없음. 대회 참가 후 시도해주세요.")
-        print(f"    API 응답: {data}")
+        print(f"    data_link 키의 값: {data.get('data', {}).get('data_link') if isinstance(data.get('data'), dict) else 'N/A'}")
         sys.exit(1)
     return link
 
