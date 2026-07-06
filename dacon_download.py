@@ -71,7 +71,8 @@ def login_cookie_dict(session, cookie_dict):
         print("[!] 쿠키 인증 실패. Chrome에서 dacon.io 로그인 상태인지 확인하세요.")
         print(f"    응답: {body}")
         sys.exit(1)
-    name = (body.get("data") or {}).get("name", "")
+    data = body.get("data")
+    name = data.get("name", "") if isinstance(data, dict) else ""
     print(f"[+] 로그인 확인: {name}")
 
 
