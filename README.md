@@ -1,15 +1,41 @@
 # Dacon Downloader
 
-Dacon 대회 데이터를 CLI에서 바로 다운로드하는 Python 스크립트입니다.  
-Remote 서버나 Colab 등 브라우저 없는 환경에서 유용합니다.
+Dacon 대회 데이터를 쉽게 다운로드하는 도구입니다.  
+**GUI 버전**: 브라우저 창이 열리고 로그인 후 자동 다운로드 (Google/카카오 소셜 로그인 지원)  
+**CLI 버전**: Remote 서버 등 GUI 없는 환경용
 
-## 설치
+---
+
+## GUI 버전 (권장)
+
+### 설치
+
+```bash
+pip install requests playwright
+python3 -m playwright install chromium --with-deps
+```
+
+### 실행
+
+```bash
+python3 dacon_gui.py
+```
+
+1. 대회 ID 입력 (예: `235900`)
+2. 저장 폴더 선택
+3. **"브라우저 열고 로그인 & 다운로드"** 버튼 클릭
+4. Chromium 브라우저에서 Google / 카카오로 로그인
+5. 로그인 완료 시 브라우저가 자동으로 닫히고 다운로드 시작
+
+---
+
+## CLI 버전
+
+### 설치
 
 ```bash
 pip install requests
 ```
-
-## 사용법
 
 ### 방법 1 — 이메일/비밀번호 (Dacon 자체 가입 계정)
 
